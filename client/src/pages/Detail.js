@@ -4,11 +4,24 @@ import { useQuery } from '@apollo/react-hooks';
 import { QUERY_PRODUCTS } from "../utils/queries";
 import spinner from '../assets/spinner.gif'
 import { useStoreContext } from "../utils/GlobalState";
-import { UPDATE_PRODUCTS } from "../utils/actions";
+import {
+  REMOVE_FROM_CART,
+  UPDATE_CART_QUANTITY,
+  ADD_TO_CART,
+  UPDATE_PRODUCTS,
+} from '../utils/actions';
 import Cart from '../components/Cart';
 
 
 function Detail() {
+  const addToCart = () => {
+    dispatch({
+      type: ADD_TO_CART,
+      product: { ...currentProduct, purchaseQuantity: 1 }
+    });
+  };
+
+
   const [state, dispatch] = useStoreContext();
   const { id } = useParams();
 
@@ -50,7 +63,7 @@ function Detail() {
             <button>
               Add to Cart
             </button>
-            <button>
+            <button> onClick={addToCart}
               Remove from Cart
             </button>
           </p>
